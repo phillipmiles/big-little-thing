@@ -1,9 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import Checkbox from '../components/Checkbox';
 import BackgroundImage from '../components/generic/BackgroundImage';
 import PageWithFooter from '../components/generic/PageWithFooter';
 import Hero from '../components/Hero';
+import ProjectFilters from '../components/ProjectFilters';
+import ProjectThumbnail from '../components/ProjectThumbnail';
 
 const Home: NextPage = () => {
   return (
@@ -18,7 +21,7 @@ const Home: NextPage = () => {
           <Hero />
           <div
             style={{
-              paddingTop: '108px',
+              paddingTop: '124px',
               paddingBottom: '108px',
               paddingLeft: '64px',
               paddingRight: '64px',
@@ -30,10 +33,95 @@ const Home: NextPage = () => {
             <div
               style={{
                 margin: 'auto',
-                // maxWidth: '1280px',
+
+                maxWidth: '1260px',
               }}
             >
-              <h2>Select a project to get started.</h2>
+              <h2 style={{ marginBottom: '72px' }}>
+                Select a project to get started.
+              </h2>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'auto 220px',
+                  columnGap: '72px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'grid',
+                    columnGap: '44px',
+                    rowGap: '44px',
+                    gridTemplateColumns: 'auto auto auto',
+                    // gridTemplateRows: '280px',
+                  }}
+                >
+                  <ProjectThumbnail
+                    title="Easy Woven Cane Nightstand"
+                    imageSrc="/images/framed-board.jpg"
+                    style={
+                      {
+                        // width: '33%',
+                      }
+                    }
+                  />
+                  <ProjectThumbnail
+                    title="Live Edge Coffee Table"
+                    imageSrc="/images/angled-board.jpg"
+                    style={
+                      {
+                        // width: '33%',
+                      }
+                    }
+                  />
+                  <ProjectThumbnail
+                    title="Concrete Coffee Table (With Cooler & Firepit)!"
+                    imageSrc="/images/little-house.jpg"
+                    style={
+                      {
+                        // width: '33%',
+                      }
+                    }
+                  />
+                  <ProjectThumbnail
+                    title="Easy Woven Cane Nightstand"
+                    imageSrc="/images/og-board.jpg"
+                    style={
+                      {
+                        // width: '33%',
+                      }
+                    }
+                  />
+                  <ProjectThumbnail
+                    title="Easy Woven Cane Nightstand"
+                    imageSrc="/images/monitor-stand.jpg"
+                    style={
+                      {
+                        // width: '33%',
+                      }
+                    }
+                  />
+                  <ProjectThumbnail
+                    title="Easy Woven Cane Nightstand"
+                    imageSrc="/images/framed-board.jpg"
+                    style={
+                      {
+                        // width: '33%',
+                      }
+                    }
+                  />
+                  <ProjectThumbnail
+                    title="Easy Woven Cane Nightstand"
+                    imageSrc="/images/tv-stand.jpg"
+                    style={
+                      {
+                        // width: '33%',
+                      }
+                    }
+                  />
+                </div>
+                <ProjectFilters />
+              </div>
             </div>
           </div>
         </main>

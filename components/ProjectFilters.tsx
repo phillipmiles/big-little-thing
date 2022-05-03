@@ -1,53 +1,14 @@
-import { useReducer, useState } from 'react';
+import categories from '../data/categories';
+import { FiltersState } from '../pages';
 import Checkbox from './Checkbox';
 
 interface Props {
+  state: FiltersState;
+  dispatch: Function;
   style?: { [key: string]: any };
 }
 
-interface FiltersState {
-  [key: string]: boolean;
-}
-
-const initialState: FiltersState = {
-  all: true,
-  choppingBoards: false,
-  decor: false,
-  furniture: false,
-};
-
-const reducer = (state: FiltersState, action: { type: string; id: string }) => {
-  switch (action.type) {
-    case 'toggle':
-      if (action.id === 'all') {
-        const newState: { [key: string]: boolean } = {};
-
-        for (const property in state) {
-          newState[property] = false;
-        }
-        newState.all = true;
-
-        return newState;
-      } else {
-        return {
-          ...state,
-          all:
-            Object.keys(state).filter(
-              (k: string) => k !== 'all' && k !== action.id && state[k]
-            ).length === 0 && state[action.id]
-              ? true
-              : false,
-          [action.id]: !state[action.id],
-        };
-      }
-    default:
-      throw new Error();
-  }
-};
-
-const ProjectFilters = ({ style }: Props) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
+const ProjectFilters = ({ style, state, dispatch }: Props) => {
   const handleSelect = (id: string) => {
     dispatch({ type: 'toggle', id: id });
   };
@@ -87,48 +48,23 @@ const ProjectFilters = ({ style }: Props) => {
         />
         All categories
       </label>
-      <label
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: '16px',
-        }}
-      >
-        <Checkbox
-          style={{ marginRight: '16px' }}
-          checked={state.choppingBoards}
-          handleSelect={() => handleSelect('choppingBoards')}
-        />
-        Chopping boards
-      </label>
-      <label
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: '16px',
-        }}
-      >
-        <Checkbox
-          style={{ marginRight: '16px' }}
-          checked={state.decor}
-          handleSelect={() => handleSelect('decor')}
-        />
-        Décor
-      </label>
-      <label
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: '16px',
-        }}
-      >
-        <Checkbox
-          style={{ marginRight: '16px' }}
-          checked={state.furniture}
-          handleSelect={() => handleSelect('furniture')}
-        />
-        Furniture
-      </label>
+      {categories.map((c) => (
+        <label
+          key={c.id}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '16px',
+          }}
+        >
+          <Checkbox
+            style={{ marginRight: '16px' }}
+            checked={state[c.id]}
+            handleSelect={() => handleSelect(c.id)}
+          />
+          {c.title}
+        </label>
+      ))}
     </div>
   );
 };

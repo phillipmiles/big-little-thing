@@ -1,14 +1,66 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
-import Checkbox from '../components/Checkbox';
-import BackgroundImage from '../components/generic/BackgroundImage';
+import { useEffect, useReducer, useState } from 'react';
 import PageWithFooter from '../components/generic/PageWithFooter';
 import Hero from '../components/Hero';
 import ProjectFilters from '../components/ProjectFilters';
 import ProjectThumbnail from '../components/ProjectThumbnail';
+import categories from '../data/categories';
+import projects from '../data/projects';
+
+export interface FiltersState {
+  [key: string]: boolean;
+}
+
+const initialState: FiltersState = {
+  all: true,
+};
+categories.forEach((c) => {
+  initialState[c.id] = false;
+});
+
+const reducer = (state: FiltersState, action: { type: string; id: string }) => {
+  switch (action.type) {
+    case 'toggle':
+      if (action.id === 'all') {
+        const newState: { [key: string]: boolean } = {};
+
+        for (const property in state) {
+          newState[property] = false;
+        }
+        newState.all = true;
+
+        return newState;
+      } else {
+        return {
+          ...state,
+          all:
+            Object.keys(state).filter(
+              (k: string) => k !== 'all' && k !== action.id && state[k]
+            ).length === 0 && state[action.id]
+              ? true
+              : false,
+          [action.id]: !state[action.id],
+        };
+      }
+    default:
+      throw new Error();
+  }
+};
 
 const Home: NextPage = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+  useEffect(() => {
+    setFilteredProjects(() => {
+      if (state.all) {
+        return projects;
+      } else {
+        return projects.filter((p) => p.categories.find((c) => state[c]));
+      }
+    });
+  }, [state]);
+
   return (
     <>
       <Head>
@@ -27,7 +79,7 @@ const Home: NextPage = () => {
               paddingRight: '64px',
               color: 'white',
               background:
-                'linear-gradient(150deg, rgba(102,108,101,1) 0%, rgba(80,88,79,1) 100%);',
+                'linear-gradient(150deg, rgba(102,108,101,1) 0%, rgba(80,88,79,1) 100%)',
             }}
           >
             <div
@@ -52,75 +104,19 @@ const Home: NextPage = () => {
                     display: 'grid',
                     columnGap: '44px',
                     rowGap: '44px',
-                    gridTemplateColumns: 'auto auto auto',
-                    // gridTemplateRows: '280px',
+                    gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
                   }}
                 >
-                  <ProjectThumbnail
-                    title="Easy Woven Cane Nightstand"
-                    imageSrc="/images/framed-board.jpg"
-                    style={
-                      {
-                        // width: '33%',
-                      }
-                    }
-                  />
-                  <ProjectThumbnail
-                    title="Live Edge Coffee Table"
-                    imageSrc="/images/angled-board.jpg"
-                    style={
-                      {
-                        // width: '33%',
-                      }
-                    }
-                  />
-                  <ProjectThumbnail
-                    title="Concrete Coffee Table (With Cooler & Firepit)!"
-                    imageSrc="/images/little-house.jpg"
-                    style={
-                      {
-                        // width: '33%',
-                      }
-                    }
-                  />
-                  <ProjectThumbnail
-                    title="Easy Woven Cane Nightstand"
-                    imageSrc="/images/og-board.jpg"
-                    style={
-                      {
-                        // width: '33%',
-                      }
-                    }
-                  />
-                  <ProjectThumbnail
-                    title="Easy Woven Cane Nightstand"
-                    imageSrc="/images/monitor-stand.jpg"
-                    style={
-                      {
-                        // width: '33%',
-                      }
-                    }
-                  />
-                  <ProjectThumbnail
-                    title="Easy Woven Cane Nightstand"
-                    imageSrc="/images/framed-board.jpg"
-                    style={
-                      {
-                        // width: '33%',
-                      }
-                    }
-                  />
-                  <ProjectThumbnail
-                    title="Easy Woven Cane Nightstand"
-                    imageSrc="/images/tv-stand.jpg"
-                    style={
-                      {
-                        // width: '33%',
-                      }
-                    }
-                  />
+                  {filteredProjects.map((p) => (
+                    <ProjectThumbnail
+                      key={p.slug}
+                      href={`/projects/${p.slug}`}
+                      title={p.title}
+                      imageSrc={p.thumbnail.src}
+                    />
+                  ))}
                 </div>
-                <ProjectFilters />
+                <ProjectFilters state={state} dispatch={dispatch} />
               </div>
             </div>
           </div>

@@ -4,7 +4,11 @@ const projects = [
     title: 'Easy Woven Cane Nightstand',
     categories: ['chopping-boards'],
     thumbnail: {
-      src: '/images/framed-board.jpg',
+      src: '/images/projects/easy-woven-cane-nightstand/thumbnail.jpg',
+      alt: '',
+    },
+    hero: {
+      src: '/images/projects/easy-woven-cane-nightstand/framed-board.jpg',
       alt: '',
     },
   },

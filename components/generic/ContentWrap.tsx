@@ -26,7 +26,6 @@ const ContentWrap = ({
     >
       <div
         style={{
-          position: 'relative',
           width: '100%',
           marginLeft: 'auto',
           marginRight: 'auto',

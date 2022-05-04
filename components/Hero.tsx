@@ -19,7 +19,7 @@ const Hero = ({ style, ...props }: Props) => (
     }}
     url="https://images.unsplash.com/photo-1470342495351-a5f90c5011cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
   >
-    <Nav />
+    <Nav transparent invert />
     <ContentWrap
       padding="64px"
       maxWidth="1100px"
@@ -35,23 +35,24 @@ const Hero = ({ style, ...props }: Props) => (
         }}
       >
         <div
-          style={{ fontSize: '56px', maxWidth: '45%', paddingBottom: '48px' }}
+          style={{ fontSize: '56px', maxWidth: '45%', paddingBottom: '64px' }}
         >
-          <h1 style={{ fontSize: '56px', marginBottom: '32px' }}>
+          <h1 style={{ fontSize: '56px', marginBottom: '40px', lineHeight: 1 }}>
             The DIY woodwork project library
           </h1>
-          <p style={{ fontSize: '20px' }}>
+          <p style={{ fontSize: '20px', marginBottom: 24 }}>
             A collection of woodworking plans and how-to guides for DIYers.
           </p>
-          <Link href="./">
+          <Link href="#projects">
             <a
               style={{
                 fontSize: '16px',
+                fontWeight: 700,
                 backgroundColor: '#A94700',
-                paddingTop: '16px',
-                paddingBottom: '16px',
-                paddingLeft: '24px',
-                paddingRight: '24px',
+                paddingTop: '20px',
+                paddingBottom: '20px',
+                paddingLeft: '32px',
+                paddingRight: '32px',
               }}
             >
               Browse projects

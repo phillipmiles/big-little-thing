@@ -51,7 +51,7 @@ const Nav = ({
       <NavItem href="/#projects" style={{ marginRight: '16px' }}>
         Projects
       </NavItem>
-      <NavItem href="/" style={{ marginRight: '16px' }}>
+      <NavItem href="#newsletter" style={{ marginRight: '16px' }}>
         Newsletter
       </NavItem>
       <NavItem

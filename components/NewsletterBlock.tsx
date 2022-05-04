@@ -9,6 +9,7 @@ interface Props {
 
 const NewsletterBlock = ({ style }: Props) => (
   <div
+    id="newsletter"
     style={{
       backgroundColor: '#202120',
       paddingTop: 92,
